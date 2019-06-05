@@ -1,0 +1,40 @@
+language: python
+python:
+  - 3.7
+  # - 2.7
+  # - 3.4
+  # - 3.5
+  # - 3.6
+
+os:
+  - linux
+  - osx
+
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then MINICONDA_OS=Linux; else MINICONDA_OS=MacOSX; fi
+  - wget https://repo.anaconda.com/miniconda/Miniconda3-latest-$MINICONDA_OS-x86_64.sh -O miniconda.sh
+  - chmod +x miniconda.sh
+  - bash miniconda.sh -b -p "$HOME"/miniconda
+  - source "$HOME"/miniconda/etc/profile.d/conda.sh
+  - conda config --set always_yes yes --set changeps1 no --set auto_update_conda false --set anaconda_upload no
+  - conda update --yes -q conda
+  - export LANG=en_US.UTF-8
+
+install:
+  - conda install -q python=$TRAVIS_PYTHON_VERSION pip conda-build anaconda-client conda-verify
+
+script:
+  - conda build crc32c
+
+after_success:
+  - chmod +x ./deploy_anaconda.sh
+
+before_deploy:
+  - conda install --use-local crc32c
+
+deploy:
+  - provider: script
+    script: ./deploy_anaconda.sh
+    on:
+      tags: true
+    skip_cleanup: true

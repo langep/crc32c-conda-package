@@ -1,0 +1,8 @@
+name: crc32c-conda-package
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - conda-build
+  - conda-verify
+  - anaconda-client
