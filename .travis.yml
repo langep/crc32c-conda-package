@@ -1,19 +1,14 @@
-language: python
-python:
-  - 3.6
-  # - 2.7
-  # - 3.4
-  # - 3.5
+language: c
+sudo: required
+
+env:
+  - BUILD_TARGET=3.7
+  - BUILD_TARGET=3.6
+  - BUILD_TARGET=2.7
 
 os:
   - linux
   - osx
-
-matrix:
-  include:
-    - python: 3.7
-      dist: xenial
-      sudo: true
 
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then MINICONDA_OS=Linux; else MINICONDA_OS=MacOSX; fi
@@ -26,16 +21,13 @@ before_install:
   - export LANG=en_US.UTF-8
 
 install:
-  - conda install -q python=$TRAVIS_PYTHON_VERSION pip conda-build anaconda-client conda-verify
+  - conda install -q python=$BUILD_TARGET pip conda-build anaconda-client conda-verify
 
 script:
-  - conda build crc32c
+  - conda build crc32c --python=$BUILD_TARGET
 
 after_success:
   - chmod +x ./deploy_anaconda.sh
-
-before_deploy:
-  - conda install --use-local crc32c
 
 deploy:
   - provider: script
