@@ -6,7 +6,7 @@
 set -e
 
 echo "Deploying to Anaconda.org..."
-anaconda -t $ANACONDA_TOKEN upload conda-bld/**/crc32c-*.tar.bz2
+anaconda -t $ANACONDA_TOKEN upload "$HOME"/miniconda/conda-bld/**/crc32c-*.tar.bz2
 
 echo "Successfully deployed to Anaconda.org."
 exit 0

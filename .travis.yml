@@ -31,6 +31,5 @@ deploy:
   - provider: script
     script: bash deploy_anaconda.sh
     on:
-      branch: master
-      #tags: true
+      tags: true
     skip_cleanup: true
