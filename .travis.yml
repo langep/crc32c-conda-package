@@ -3,12 +3,12 @@ sudo: required
 
 env:
   - BUILD_TARGET=3.7
-#  - BUILD_TARGET=3.6
-#  - BUILD_TARGET=2.7
+  - BUILD_TARGET=3.6
+  - BUILD_TARGET=2.7
 
 os:
   - linux
-#  - osx
+  - osx
 
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then MINICONDA_OS=Linux; else MINICONDA_OS=MacOSX; fi
